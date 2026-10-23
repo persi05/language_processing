@@ -1,0 +1,39 @@
+LAB2 wyniki
+PL: Pan Tadeusz bez nagłówka i stopki; EN: Hamlet bez nagłówka i licencji.
+
+## A - n-gramy w tekście polskim
+A1–A3: 445325 znaków, 3671 zdań, 68191 wyrazów; tekst oczyszczony: 421597 znaków.
+A4–A5: unigramy: 68191 wystąpień, 18760 typów; top 10: i (2126), w (1693), się (1496), z (1384), na (1303), nie (938), jak (578), do (565), a (565), że (555)
+A4–A5: bigramy: 68190 wystąpień, 58785 typów; top 10: się w (76), i z (72), się z (67), się i (61), i w (55), się na (47), i na (39), co się (38), i tak (36), na to (30)
+A4–A5: trigramy: 68189 wystąpień, 67384 typów; top 10: się z nim (8), hejże na soplicę (6), idąc kłaniał się (5), za mych czasów (5), ostatniego z horeszków (5), z drugiej strony (5), raz po raz (5), a na to (5), pro publico bono (5), w domu sędziego (4)
+A6–A7: histogramy A_bigramy.png i A_trigramy.png. Bigramy dominujące są pokazane powyżej;
+trigramy wskazują powtarzane frazy, lecz nie dowodzą unikalnego stylu autora. Te frazy mogły po prostu być popularne w tamtym czasie dla każdego autora, trzebaby porównać z innymi autorami i ksiązkami.
+Unigramy są mocniej skupione na częstych wyrazach, kilka pojedynczych wyrazów występuje bardzo często, a większość rzadko; bigramy mają więcej typów i kombinacji i dłuższy ogon rzadkich kombinacji, tez konkretne pary się rzadzeiej powtarzają, mamy 18760 róznych unigramów, a aż 58785 bigramów.
+
+## B angielski stemming i lematyzacja
+B1–B4: 5 cytatów; pełna tabela B_token_rdzen_lemat.csv. Przykłady różnic: [("Who's", "who'", "who's"), ('seen', 'seen', 'see'), ('nothing', 'noth', 'nothing'), ('graves', 'grave', 'graf'), ('stood', 'stood', 'stand'), ('am', 'am', 'be')]
+Stemming mechanicznie skraca i może zwrócić nieistniejący wyraz; lematyzacja próbuje znaleźć formę słownikową z uwzględnieniem części mowy.
+WordNet może błędnie rozstrzygnąć wieloznaczność, np. graves → graf; to ograniczenie metody w tym kontekście(WordNet znalazł więcej niż jedną możliwą formę podstawową dla graves)
+
+## C odległość Levenshteina
+C1–C3: 'Ala ma kota' → 'Ala posiada kota': 6 edycji. Jedna optymalna ścieżka: wstawienie 'p' po pozycji 4; wstawienie 'o' po pozycji 4; wstawienie 's' po pozycji 4; wstawienie 'i' po pozycji 4; wstawienie 'a' po pozycji 4; zamiana 'm' → 'd' na pozycji 5.
+
+## D porównanie stemmerów
+D1–D2: różne rdzenie dla 1915 typów; pięć przykładów: [('being', 'be', 'being'), ('graves', 'grave', 'grav'), ('nature', 'natur', 'nat'), ('streets', 'street', 'streets'), ('wonder', 'wonder', 'wond')].
+Porter zachowuje czytelniejszy rdzeń np. nature → natur (Lancaster: nat) i wonder → wonder (Lancaster: wond). Lancaster jest agresywny - 100 reguł dopóki kazda nie będzie pasowac
+D3: nadmierne obcinanie Lancastera: man i manner → man; różne znaczenia dostają ten sam rdzeń.
+D3: niedostateczne zbieganie Portera: see → see, seen → seen; to formy jednego czasownika.
+
+## E polskie formy
+E1: fragment 4500 znaków, 682 wyrazów; tabela E_polski_token_rdzen_lemat.csv.
+E2: pięć polskich słów po angielskim Snowball: [('Litwo', 'litwo'), ('Ojczyzno', 'ojczyzno'), ('moja', 'moja'), ('ty', 'ty'), ('jesteś', 'jesteś')].
+E2: pięć sztucznych zmian przez angielski stemmer: [('zdrowie', 'zdrowi'), ('dowie', 'dowi'), ('ozdobie', 'ozdobi'), ('tobie', 'tobi'), ('Częstochowy', 'częstochowi')].
+E3: języki NLTK SnowballStemmer: arabic, danish, dutch, english, finnish, french, german, hungarian, italian, norwegian, porter, portuguese, romanian, russian, spanish, swedish.
+Polskiego brak na liście; angielski algorytm nie rozpoznaje polskiej fleksji.
+E: np. jesteś → być w lematyzacji spaCy, podczas gdy Stempel daje y; agresywny rdzeń bywa trudny do interpretacji.
+
+## F miary podobieństwa
+F1–F3: Levenshtein liczy zamiany, wstawienia i usunięcia; Damerau także transpozycję sąsiednich znaków.
+Jaro-Winkler mierzy dopasowanie znaków i premiuje wspólny początek; Jaccard porównuje zbiory bigramów znakowych.
+Pełna tabela F_miary.csv; podobieństwa są w skali 0–1, Levenshtein i Damerau dodatkowo podano jako odległości.
+F4: największa rozpiętość: 'kot je bulke'/'kto je bułke', podobieństwa 0.75, 0.8333, 0.9227, 0.375 — transpozycja kontra zbiory bigramów.

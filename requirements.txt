@@ -1,0 +1,5 @@
+nltk==3.10.4
+spacy==3.8.16
+matplotlib==3.11.2
+textdistance==4.6.3
+pystempel==2.0.0

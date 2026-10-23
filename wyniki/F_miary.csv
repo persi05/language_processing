@@ -1,0 +1,6 @@
+﻿tekst1;tekst2;Levenshtein_odleglosc;Levenshtein_podobienstwo;Damerau_odleglosc;Damerau_podobienstwo;Jaro_Winkler;Jaccard_bigramy
+Ala ma kota;Ala posiada kota;6;0.625;6;0.625;0.8468;0.4706
+kot je bulke;kto je bułke;3;0.75;2;0.8333;0.9227;0.375
+zolw;żółw;3;0.25;3;0.25;0.5;0.0
+Warszawa;Warzawa;1;0.875;1;0.875;0.9708;0.625
+dom;tom;1;0.6667;1;0.6667;0.7778;0.3333

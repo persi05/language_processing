@@ -1,0 +1,6 @@
+.tools/
+.venv/
+__pycache__/
+data/nltk_data/
+wyniki/.matplotlib/
+
