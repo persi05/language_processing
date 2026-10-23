@@ -1,6 +1,4 @@
-# Lab2 — zakres 3.0 i 4.0
-
-Projekt realizuje części **A–F** z `Lab2.md`. Wyniki są w `wyniki/wyniki_lab2.txt`; pełne tabele i histogramy w katalogu `wyniki/`. Sprawozdanie poziomu 4.0 jest w `Sprawozdanie_Lab2_4_0.pdf`. Szczegółowa mapa punktów zadania do plików jest w `PRZEWODNIK_LAB2.md`.
+# Lab2
 
 ## Pliki
 
