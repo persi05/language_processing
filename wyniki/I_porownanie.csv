@@ -1,0 +1,5 @@
+﻿wariant;jednostki_fragment;slownik_fragment;zmiana_slownika_fragment_proc;jednostki_ksiazka;slownik_ksiazka;zmiana_slownika_ksiazka_proc;poczatek
+same wyrazy;682;492;0.0;68144;18761;0.0;litwo ojczyzno moja ty jesteś jak zdrowie ile cię trzeba cenić ten
+wyrazy po lematyzacji (spaCy);682;435;-11.6;68144;13461;-28.3;litwo ojczyzno mój ty być jak zdrowie ile ty trzeba cenić ten
+wyrazy bez stop words;451;418;-15.0;43585;18487;-1.5;litwo ojczyzno jesteś zdrowie cenić dowie stracił piękność twą całej ozdobie widzę
+tokeny BPE 5000;1180;726;47.6;109897;4837;-74.2;▁Lit wo ▁Oj czyz no ▁moja ▁ty ▁jesteś ▁jak ▁zdrowie ▁Ile ▁cię

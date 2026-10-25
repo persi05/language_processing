@@ -1,0 +1,7 @@
+﻿ngramy;wariant;wystapienia;typy;udzial_top10_proc;top10
+unigramy;ze stop words;68191;18760;16.43;i (2126), w (1693), się (1496), z (1384), na (1303), nie (938), jak (578), do (565), a (565), że (555)
+unigramy;bez stop words;43629;18486;2.23;rzekł (155), hrabia (129), sędzia (127), tadeusz (106), wojski (89), potem (86), oczy (78), domu (76), szlachta (64), cóż (62)
+bigramy;ze stop words;68190;58785;0.76;się w (76), i z (72), się z (67), się i (61), i w (55), się na (47), i na (39), co się (38), i tak (36), na to (30)
+bigramy;bez stop words;43628;42713;0.17;rzekł sędzia (14), jaśnie wielmożny (9), jenerał dąbrowski (8), ksiądz robak (8), rzekł hrabia (8), dal j (6), drugiej strony (6), hejże soplicę (6), idąc kłaniał (5), kapitan ryków (5)
+trigramy;ze stop words;68189;67384;0.08;się z nim (8), hejże na soplicę (6), idąc kłaniał się (5), za mych czasów (5), ostatniego z horeszków (5), z drugiej strony (5), raz po raz (5), a na to (5), pro publico bono (5), w domu sędziego (4)
+trigramy;bez stop words;43627;43480;0.09;pro publico bono (5), wieku urzędu zaszczyt (4), urzędu zaszczyt należy (4), zaszczyt należy idąc (4), należy idąc kłaniał (4), ostatniego horeszków chociaż (4), horeszków chociaż kądzieli (4), goście weszli porządku (3), weszli porządku stanęli (3), porządku stanęli kołem (3)

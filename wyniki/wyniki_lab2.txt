@@ -33,7 +33,71 @@ Polskiego brak na liście; angielski algorytm nie rozpoznaje polskiej fleksji.
 E: np. jesteś → być w lematyzacji spaCy, podczas gdy Stempel daje y; agresywny rdzeń bywa trudny do interpretacji.
 
 ## F miary podobieństwa
-F1–F3: Levenshtein liczy zamiany, wstawienia i usunięcia; Damerau także transpozycję sąsiednich znaków.
+F1–F3: Levenshtein liczy zamiany, wstawienia i usunięcia; Damerau uwzglednia przestawienie dwoch sąsiednich znaków (kot kto).
 Jaro-Winkler mierzy dopasowanie znaków i premiuje wspólny początek; Jaccard porównuje zbiory bigramów znakowych.
 Pełna tabela F_miary.csv; podobieństwa są w skali 0–1, Levenshtein i Damerau dodatkowo podano jako odległości.
-F4: największa rozpiętość: 'kot je bulke'/'kto je bułke', podobieństwa 0.75, 0.8333, 0.9227, 0.375 — transpozycja kontra zbiory bigramów.
+F4: największa rozpiętość: 'kot'/'kto', podobieństwa 0.3333, 0.6667, 0.5556, 0.0 — transpozycja kontra zbiory bigramów.
+
+## G stop words i nazwy własne
+G1: lista stop-words (polish): 335 wyrazów; usunięto 24562 z 68191 wyrazów (36.0%), zostało 43629.
+G2: unigramy bez stop words: 43629 wystąpień, 18486 typów; top 10: rzekł (155), hrabia (129), sędzia (127), tadeusz (106), wojski (89), potem (86), oczy (78), domu (76), szlachta (64), cóż (62)
+G2: bigramy bez stop words: 43628 wystąpień, 42713 typów; top 10: rzekł sędzia (14), jaśnie wielmożny (9), jenerał dąbrowski (8), ksiądz robak (8), rzekł hrabia (8), dal j (6), drugiej strony (6), hejże soplicę (6), idąc kłaniał (5), kapitan ryków (5)
+G2: trigramy bez stop words: 43627 wystąpień, 43480 typów; top 10: pro publico bono (5), wieku urzędu zaszczyt (4), urzędu zaszczyt należy (4), zaszczyt należy idąc (4), należy idąc kłaniał (4), ostatniego horeszków chociaż (4), horeszków chociaż kądzieli (4), goście weszli porządku (3), weszli porządku stanęli (3), porządku stanęli kołem (3)
+G2–G3: histogramy G_bigramy.png i G_trigramy.png; zestawienie obu wariantów w G_porownanie.csv.
+G3: usunięcie stop words zabiera 36% wyrazów, ale tylko 274 typów — lista to głównie bardzo częste wyrazy funkcyjne (także pan, pani).
+G3: różnice są istotne. Ze stop words top bigramy to połączenia funkcyjne (się w, i z, się z), które opisują składnię i styl;
+bez stop words wychodzą postacie i sytuacje (rzekł sędzia, ksiądz robak, jenerał dąbrowski, rzekł hrabia), czyli treść.
+G3: wariant bez stop words lepiej pokazuje treść, wariant pełny — styl (spójniki, zaimek się, zwroty dialogowe).
+G3: koszt: powstają pary, które w tekście nie sąsiadowały (idąc kłaniał ← idąc kłaniał się), a trigramy prawie się nie
+powtarzają — top trigramy to w większości kawałki jednego powtarzanego dwuwiersza (Z wieku mu i z urzędu ten zaszczyt należy, /
+Idąc kłaniał się...). Bigram dal j to artefakt czyszczenia z części A: dawna pisownia daléj traci literę é.
+G4: wyrażenie regularne (?<=[a-ząćęłńóśźż,;] )[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+ — wielka litera tylko po małej literze, przecinku lub średniku i spacji,
+więc pomija początki zdań, wersów, wypowiedzi po myślniku i cytatów.
+G4: 2765 trafień, 925 różnych form; po odrzuceniu form, które częściej występują małą literą, zostało 828 form (2637 wystąpień).
+G4: najczęstsze odrzucone (forma, wielką, małą): [('Pan', 11, 128), ('Ojczyzny', 3, 7), ('Mopanku', 3, 8), ('Waść', 3, 12), ('Trzeci', 3, 4), ('Panu', 3, 16), ('Państwo', 3, 8), ('Jego', 2, 74)].
+G5: 10 najczęstszych nazw własnych: Sędzia (89), Hrabia (79), Wojski (57), Tadeusza (50), Tadeusz (43), Gerwazy (38), Sędziego (37), Robak (36), Litwie (34), Ryków (34); wykres G_nazwy_wlasne.png.
+G5: ograniczenia: odmiana rozbija jedną nazwę na kilka form (Tadeusz/Tadeusza, Sędzia/Sędziego); tytuły pisane wielką
+literą (Sędzia, Hrabia, Wojski) pełnią w utworze rolę imion postaci; nazwy na początku zdania lub wersu są pomijane,
+a filtr małych liter odrzuca formy grzecznościowe i podniosłe (Pan, Waść, Jego, Ojczyzny).
+
+## H własny tokenizator BPE
+H1–H2: BPE (tokenizers) uczony na Panu Tadeuszu, 9942 wersów; zadany → rzeczywisty rozmiar słownika: 1000 → 1000, 5000 → 5000, 30000 → 30000; wariant 5000 zapisany jako tokenizer_pl.json, pozostałe w wyniki/.
+H3: nieprzetłumaczalny: 1000: ▁nie | p | rze | t | łu | ma | cza | l | ny (9); 5000: ▁nie | prze | t | łu | ma | cza | l | ny (8); 30000: ▁nie | prze | t | łuma | cza | lny (6)
+H3: hiperparametryzacja: 1000: ▁h | i | p | er | pa | ra | me | t | ry | za | c | ja (12); 5000: ▁hi | p | er | pa | ra | me | try | za | c | ja (10); 30000: ▁hi | per | pa | ra | me | try | za | cja (8)
+H3: kotkowi: 1000: ▁ko | t | ko | wi (4); 5000: ▁kot | kowi (2); 30000: ▁kot | kowi (2)
+H3: Soplicowo: 1000: ▁Soplico | wo (2); 5000: ▁Soplico | wo (2); 30000: ▁Soplicowo (1)
+H4: gpt2 = gpt2
+H4: HerBERT = allegro/herbert-base-cased
+H4: Bielik = speakleash/Bielik-1.5B-v3
+H4: zdania EN to cytaty z Hamleta, zdania PL to ich własne tłumaczenia (te same treści); tabela H_liczba_tokenow.csv.
+H4: tokeny na wyraz liczone na samych wyrazach (bez interpunkcji): cały Pan Tadeusz i współczesny akapit spoza książki.
+H5: BPE_5000: średnio PL 13.6, EN 25.8 tokenów/zdanie; PL/EN = 0.53; tokeny na wyraz: Pan Tadeusz 1.61, tekst współczesny 2.48
+H5: gpt2: średnio PL 23.4, EN 11.0 tokenów/zdanie; PL/EN = 2.13; tokeny na wyraz: Pan Tadeusz 3.3, tekst współczesny 3.83
+H5: HerBERT: średnio PL 11.2, EN 16.2 tokenów/zdanie; PL/EN = 0.69; tokeny na wyraz: Pan Tadeusz 1.44, tekst współczesny 1.11
+H5: Bielik: średnio PL 10.6, EN 15.8 tokenów/zdanie; PL/EN = 0.67; tokeny na wyraz: Pan Tadeusz 1.49, tekst współczesny 1.08
+H6: rozmiar słownika → tokeny (Pan Tadeusz, zdania PL): 500 → 211285, 101; 1000 → 180062, 86; 2000 → 155789, 75; 5000 → 129440, 68; 10000 → 112803, 61; 20000 → 98975, 59; 30000 → 88975, 57; wykres H_tokeny_vs_slownik.png.
+H6: tokeny na wyraz (Pan Tadeusz / tekst współczesny): 500: 2.81 / 3.92; 1000: 2.35 / 3.41; 2000: 2.0 / 2.92; 5000: 1.61 / 2.48; 10000: 1.37 / 2.17; 20000: 1.17 / 1.98; 30000: 1.03 / 1.86.
+H6a: najmniej tokenów na zdanie: dla polskiego Bielik, dla angielskiego gpt2.
+H6b: większy słownik daje mniej tokenów, ale nie liniowo: każde podwojenie słownika zmniejsza liczbę tokenów Pana Tadeusza
+o podobny procent (12%–17%), więc zależność jest w przybliżeniu logarytmiczna. Przejście 1000→5000 oszczędza 12.7 tokenu na każdy nowy wpis,
+a 5000→30000 już tylko 1.6; kolejne scalenia dotyczą coraz rzadszych ciągów.
+H6c: tokenizator uczony na jednej książce zapamiętuje jej słownictwo (imiona, archaizmy, częste formy): na Panu Tadeuszu
+daje 1.61 tokenu na wyraz, na współczesnym tekście 2.48; wariant 30000: 1.03 wobec 1.86 (Soplicowo to 1 token, hiperparametryzacja 8). HerBERT, uczony na dużym
+korpusie, zachowuje się odwrotnie (1.44 / 1.11), bo to archaiczny wiersz jest dla niego rzadszy.
+H6d: podatek językowy to dodatkowe tokeny (koszt, czas, krótszy kontekst) za tę samą treść w języku słabo reprezentowanym
+w danych tokenizatora. Na zdaniach równoległych gpt2 potrzebuje dla polskiego 2.13× tyle tokenów co dla angielskiego;
+pozostałe PL/EN: BPE_5000 0.53, HerBERT 0.69, Bielik 0.67. Tokenizatory uczone na polszczyźnie odwracają podatek — płaci go wtedy angielski.
+
+## I porównanie metod
+I1–I2: ten sam fragment co w E (4500 znaków) oraz dla skali cały Pan Tadeusz; tabela I_porownanie.csv.
+I2: same wyrazy: fragment 682 jednostek, słownik 492 (+0.0%); cała książka 68144 jednostek, słownik 18761 (+0.0%); początek: litwo ojczyzno moja ty jesteś jak zdrowie ile cię trzeba cenić ten
+I2: wyrazy po lematyzacji (spaCy): fragment 682 jednostek, słownik 435 (-11.6%); cała książka 68144 jednostek, słownik 13461 (-28.3%); początek: litwo ojczyzno mój ty być jak zdrowie ile ty trzeba cenić ten
+I2: wyrazy bez stop words: fragment 451 jednostek, słownik 418 (-15.0%); cała książka 43585 jednostek, słownik 18487 (-1.5%); początek: litwo ojczyzno jesteś zdrowie cenić dowie stracił piękność twą całej ozdobie widzę
+I2: tokeny BPE 5000: fragment 1180 jednostek, słownik 726 (+47.6%); cała książka 109897 jednostek, słownik 4837 (-74.2%); początek: ▁Lit wo ▁Oj czyz no ▁moja ▁ty ▁jesteś ▁jak ▁zdrowie ▁Ile ▁cię
+I3: usunięcie stop words na fragmencie zmniejsza słownik o 15.0%, ale w książce tylko o 1.5%: usuwa 274
+typów, więc skraca głównie tekst, a nie słownik; kosztem jest utrata składni i negacji (nie też jest na liście).
+I3: lematyzacja łączy formy fleksyjne: -11.6% na fragmencie i -28.3% w książce; koszt to utrata informacji
+gramatycznej (przypadek, liczba, czas) i błędy lematyzatora (litwo, ojczyzno zostają bez zmian).
+I3: BPE na fragmencie powiększa słownik (+47.6%), bo jeden wyraz daje kilka różnych podsłów, ale w skali książki
+ma najmniejszy słownik (4837 jednostek, -74.2%), z góry ograniczony do 5000 i bez słów spoza słownika.
+Kosztem są dłuższe sekwencje (109897 zamiast 68144 jednostek) i podsłowa bez własnego znaczenia (▁Lit wo, ▁Oj czyz no).
